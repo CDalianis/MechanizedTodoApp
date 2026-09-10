@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mechanized Todo</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <p class="eyebrow">Simone Giertz–inspired</p>
+        <h1>Mechanized Todo</h1>
+        <p class="subtitle">A helical-pole chore randomizer. Pull the lever, watch the pointer climb the column, do the task.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value" id="active-count">0</span>
+          <span class="stat-label">Remaining</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="finished-count">0</span>
+          <span class="stat-label">Finished</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="machine-panel" aria-label="Mechanical chore column">
+        <div class="machine-frame">
+          <div class="machine-top-label">NOT FINISHED</div>
+
+          <div class="machine-body">
+            <div class="helical-column">
+              <svg class="helical-svg" viewBox="0 0 80 320" aria-hidden="true">
+                <defs>
+                  <linearGradient id="poleGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#e8d5b5" />
+                    <stop offset="50%" stop-color="#f5ead6" />
+                    <stop offset="100%" stop-color="#d4bc96" />
+                  </linearGradient>
+                </defs>
+                <rect x="20" y="10" width="40" height="300" rx="8" fill="url(#poleGrad)" stroke="#b8956a" stroke-width="2" />
+                <path class="helical-groove" d="M40,20 C55,40 25,60 40,80 C55,100 25,120 40,140 C55,160 25,180 40,200 C55,220 25,240 40,260 C55,280 25,300 40,310" fill="none" stroke="#8b6914" stroke-width="3" stroke-linecap="round" />
+                <circle class="helical-pin" cx="40" cy="20" r="5" fill="#c0392b" stroke="#7f1d1d" stroke-width="1.5" />
+                <circle cx="40" cy="310" r="10" fill="#c4a574" stroke="#8b6914" stroke-width="2" />
+              </svg>
+            </div>
+
+            <div class="task-column-assembly">
+              <div class="task-column-viewport">
+                <div class="pointer-track" aria-hidden="true">
+                  <div class="task-pointer" id="task-pointer">
+                    <div class="pointer-head"></div>
+                    <div class="pointer-stem"></div>
+                  </div>
+                </div>
+                <div class="task-column" id="task-column"></div>
+                <p class="task-column-empty hidden" id="task-column-empty">No chores in the column.</p>
+              </div>
+            </div>
+
+            <div class="finished-rack">
+              <div class="rack-label">FINISHED</div>
+              <div class="rack-slats" id="finished-rack"></div>
+            </div>
+          </div>
+
+          <div class="machine-base"></div>
+        </div>
+
+        <button class="lever-btn" id="spin-btn" type="button">
+          <span class="lever-handle"></span>
+          <span class="lever-text">Pull lever to pick</span>
+        </button>
+      </section>
+
+      <section class="control-panel">
+        <div class="card">
+          <h2>Add a chore</h2>
+          <form id="add-form" class="add-form">
+            <input id="todo-input" type="text" placeholder="e.g. Do the dishes" maxlength="120" autocomplete="off" required />
+            <button type="submit">Add</button>
+          </form>
+        </div>
+
+        <div class="card selected-card" id="selected-card">
+          <h2>Selected chore</h2>
+          <p class="selected-empty" id="selected-empty">Pull the lever to pick a random task.</p>
+          <div class="selected-task hidden" id="selected-task">
+            <p class="selected-title" id="selected-title"></p>
+            <button class="complete-btn" id="complete-btn" type="button">Mark finished</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Active chores</h2>
+          <ul class="todo-list" id="active-list"></ul>
+          <p class="empty-msg hidden" id="active-empty">No chores yet. Add some above.</p>
+        </div>
+
+        <div class="card">
+          <h2>Finished</h2>
+          <ul class="todo-list finished-list" id="finished-list"></ul>
+          <p class="empty-msg hidden" id="finished-empty">Nothing finished yet.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
